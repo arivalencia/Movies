@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="three">#2B8EB5</color>
+    <color name="secondary">#0C5A78</color>
+    <color name="primary">#07384C</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="activity_bg">#F1F1F1</color>
+</resources>

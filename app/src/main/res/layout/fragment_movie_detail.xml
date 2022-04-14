@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="movieDetail"
+            type="com.ari.movies.ui.model.MovieUi" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_title"
+                style="@style/MovieTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="SpiderMan No way home"
+                android:text="@{movieDetail.title}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_overview"
+                style="@style/MovieOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="After settling in Green Hills, Sonic is eager to prove he has what it takes to be a true hero. His test comes when Dr. Robotnik returns, this time with a new partner, Knuckles, in search for an emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands."
+                android:text="@{movieDetail.overview}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_original_title"
+                style="@style/MovieData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_overview"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/original_title"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_original_title_result"
+                style="@style/MovieDataResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_overview"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Lorem Ipsum"
+                android:text="@{movieDetail.originalTitle}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_qualification"
+                style="@style/MovieData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_original_title"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/qualification"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_qualification_result"
+                style="@style/MovieDataResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_original_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="7.7"
+                app:textNumber="@{movieDetail.voteAverage}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_popularity"
+                style="@style/MovieData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_qualification"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/popularity"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_popularity_result"
+                style="@style/MovieDataResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_qualification"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="74444.1"
+                app:textNumber="@{movieDetail.popularity}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_adult"
+                style="@style/MovieData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_popularity"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/for_adults"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_adult_result"
+                style="@style/MovieDataResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_popularity"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Yes"
+                android:text="@{movieDetail.adult ? @string/yes : @string/no}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_language"
+                style="@style/MovieData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adult"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/original_language"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_language_result"
+                style="@style/MovieDataResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_adult"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="EN"
+                android:text="@{movieDetail.originalLanguage.toUpperCase()}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_release_date"
+                style="@style/MovieData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_language"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/release_date"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_release_date_result"
+                style="@style/MovieDataResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_language"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="EN"
+                android:text="@{movieDetail.releaseDate}"/>
+
+
+            <!--        <androidx.appcompat.widget.AppCompatTextView-->
+            <!--            android:id="@+id/tv_static_for_adults"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            app:layout_constraintTop_toBottomOf="@+id/tv_title"-->
+            <!--            app:layout_constraintStart_toStartOf="parent"-->
+            <!--            app:layout_constraintEnd_toEndOf="parent"-->
+            <!--            android:text="@string/for_adults" />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>
