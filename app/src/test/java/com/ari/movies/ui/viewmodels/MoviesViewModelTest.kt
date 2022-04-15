@@ -135,4 +135,15 @@ class MoviesViewModelTest {
         assert(moviesViewModel.currentPage.value!! == moviesViewModel.FIRST_PAGE)
     }
 
+    @Test
+    fun `when clear error then live data is empty`() = runTest {
+        // Given
+
+        //When
+        moviesViewModel.clearError()
+
+        //Then
+        assert(moviesViewModel.error.value!!.isEmpty())
+    }
+
 }

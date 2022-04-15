@@ -3,14 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_primary_button.xml" value="0.1525" />
         <entry key="app/src/main/res/drawable/bg_search.xml" value="0.3645" />
+        <entry key="app/src/main/res/drawable/ic_baseline_error_24.xml" value="0.1525" />
         <entry key="app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.3445" />
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.3645" />
+        <entry key="app/src/main/res/drawable/shape_rounded_dialog.xml" value="0.1525" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24391891891891893" />
         <entry key="app/src/main/res/layout/dialog_something_went_wrong.xml" value="0.20101351351351351" />
         <entry key="app/src/main/res/layout/fragment_movie_detail.xml" value="0.23634185791015627" />
         <entry key="app/src/main/res/layout/fragment_movies.xml" value="0.24147157190635452" />
         <entry key="app/src/main/res/layout/fragment_moview_detail.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/include_dialog_top_bar.xml" value="0.19155405405405404" />
         <entry key="app/src/main/res/layout/item_movie.xml" value="0.2326388888888889" />
         <entry key="app/src/main/res/menu/menu_movies_filter.xml" value="0.18817567567567567" />
       </map>
