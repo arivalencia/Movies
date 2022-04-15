@@ -10,7 +10,7 @@ import com.ari.movies.framework.data.local.entities.PlayingNowPageEntity
 interface PlayingNowMoviesPageDao {
 
     @Query("SELECT * FROM playing_now_movies_page_table WHERE page = :page")
-    suspend fun getPlayingNowMoviesPage(page: Int): PlayingNowPageEntity
+    suspend fun getPlayingNowMoviesPage(page: Int): PlayingNowPageEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPlayingNowMoviesPage(data: PlayingNowPageEntity)

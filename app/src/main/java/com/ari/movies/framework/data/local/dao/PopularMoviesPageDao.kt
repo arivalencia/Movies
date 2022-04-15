@@ -10,7 +10,7 @@ import com.ari.movies.framework.data.local.entities.PopularMoviesPageEntity
 interface PopularMoviesPageDao {
 
     @Query("SELECT * FROM popular_movies_page_table where page = :page")
-    suspend fun getPopularMoviesPage(page: Int): PopularMoviesPageEntity
+    suspend fun getPopularMoviesPage(page: Int): PopularMoviesPageEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPopularMoviesPage(page: PopularMoviesPageEntity)

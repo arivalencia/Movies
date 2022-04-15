@@ -12,8 +12,12 @@ class GetPlayingNowMoviesUseCase @Inject constructor(
     private val moviesRepository: MoviesRepository
 ) {
 
-    suspend operator fun invoke(page: Int): ResultDomain<PlayingNowResponseDomain> =
-        when (val response: Response<PlayingNowResponseData> = moviesRepository.getPlayingNowMovies(page)) {
+    suspend operator fun invoke(page: Int): ResultDomain<PlayingNowResponseDomain> {
+        if (page < 1) {
+            return ResultDomain.Error("Page invalid")
+        }
+
+        return when (val response: Response<PlayingNowResponseData> = moviesRepository.getPlayingNowMovies(page)) {
             is Response.Success -> {
                 moviesRepository.deletePlayingNowMoviesFromDB(page)
                 moviesRepository.insertPlayingNowMoviesToDB(response.result)
@@ -21,8 +25,15 @@ class GetPlayingNowMoviesUseCase @Inject constructor(
             }
             is Response.Error -> {
                 //ResultDomain.Error(response.error)
-                ResultDomain.Success(moviesRepository.getPlayingNowMoviesFromDB(page).toDomain())
+                val data: PlayingNowResponseDomain? = moviesRepository.getPlayingNowMoviesFromDB(page)?.toDomain()
+                if (data != null) {
+                    ResultDomain.Success(data)
+                } else {
+                    ResultDomain.Error("No data from local database")
+                }
             }
         }
+    }
+
 
 }

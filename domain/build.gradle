@@ -38,10 +38,17 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-
+    
     implementation project(':data')
 
     // Dagger hilt (dependency injection)
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    // Mock (for testing)
+    testImplementation "io.mockk:mockk:1.12.2"
+
+    // For use [runBlocking] in tests
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
+
 }

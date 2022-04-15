@@ -19,42 +19,76 @@ class MoviesViewModel @Inject constructor(
     private val getPlayingNowMoviesUseCase: GetPlayingNowMoviesUseCase
 ): ViewModel() {
 
+    val FIRST_PAGE = 1
+    var showingMostPopular = true
+
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _currentPage = MutableLiveData<Int>(1)
+    private val _currentPage = MutableLiveData<Int>(FIRST_PAGE)
     val currentPage: LiveData<Int> get() = _currentPage
 
-    private val _movies = MutableLiveData<List<MovieUi>>()
+    private val _movies = MutableLiveData<List<MovieUi>>(emptyList())
     val movies: LiveData<List<MovieUi>> get() = _movies
 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> get() = _error
 
-    init {
+    fun onCreate() {
+        if (movies.value!!.isEmpty()) {
+            getPopularMovies()
+        }
+    }
+
+    // Clean data on change of movies type (most popular or playing now)
+    private fun resetPageNumberAndMovies() {
+        _currentPage.value = FIRST_PAGE
+        _movies.postValue(emptyList())
+    }
+
+    fun changeToMostPopularMovies() {
+        resetPageNumberAndMovies()
         getPopularMovies()
     }
 
+    fun changeToPlayingNowMovies() {
+        resetPageNumberAndMovies()
+        getPlayingNowMovies()
+    }
+
+    fun loadNextPage() {
+        if (showingMostPopular) {
+            getPopularMovies()
+        } else {
+            getPlayingNowMovies()
+        }
+    }
+
     fun getPopularMovies() = viewModelScope.launch {
+        showingMostPopular = true
         _isLoading.postValue(true)
-        when(val result = getPopularMoviesUseCase(currentPage.value!!)) {
-            is ResultDomain.Success -> {
-                _movies.postValue(result.result.results.map { it.toUi() })
-            }
+        when(val result = getPopularMoviesUseCase(_currentPage.value!!)) {
+            is ResultDomain.Success -> addMovies(result.result.results.map { it.toUi() })
             is ResultDomain.Error -> _error.postValue(result.error)
         }
         _isLoading.postValue(false)
     }
 
     fun getPlayingNowMovies() = viewModelScope.launch {
+        showingMostPopular = false
         _isLoading.postValue(true)
-        when(val result = getPlayingNowMoviesUseCase(currentPage.value!!)) {
-            is ResultDomain.Success -> {
-                _movies.postValue(result.result.results.map { it.toUi() })
-            }
+        when(val result = getPlayingNowMoviesUseCase(_currentPage.value!!)) {
+            is ResultDomain.Success -> addMovies(result.result.results.map { it.toUi() })
             is ResultDomain.Error -> _error.postValue(result.error)
         }
         _isLoading.postValue(false)
+    }
+
+    private fun addMovies(list: List<MovieUi>) {
+        val previousList = ArrayList(movies.value!!)
+        previousList.addAll(list)
+        _movies.postValue(previousList)
+        _currentPage.postValue(_currentPage.value!! + 1)
     }
 
 }

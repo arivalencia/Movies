@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MovieUi(
     val adult: Boolean,
-    val backdropPath: String,
+    val backdropPath: String?,
     val genreIds: List<Int>,
     val id: Int,
     val originalLanguage: String,

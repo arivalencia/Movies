@@ -20,7 +20,7 @@ class MoviesRepository @Inject constructor(
     suspend fun getPlayingNowMovies(page: Int): Response<PlayingNowResponseData> =
         moviesRemoteDataSource.getPlayingNowMovies(page)
 
-    suspend fun getPopularMoviesFromDB(page: Int): PopularMoviesResponseData =
+    suspend fun getPopularMoviesFromDB(page: Int): PopularMoviesResponseData? =
         moviesLocalDataSource.getPopularMoviesFromDB(page)
 
     suspend fun deletePopularMoviesFromDB(page: Int) =
@@ -29,7 +29,7 @@ class MoviesRepository @Inject constructor(
     suspend fun insertPopularMoviesToDB(data: PopularMoviesResponseData) =
         moviesLocalDataSource.insertPopularMoviesToDB(data)
 
-    suspend fun getPlayingNowMoviesFromDB(page: Int): PlayingNowResponseData =
+    suspend fun getPlayingNowMoviesFromDB(page: Int): PlayingNowResponseData? =
         moviesLocalDataSource.getPlayingNowMoviesFromDB(page)
 
     suspend fun deletePlayingNowMoviesFromDB(page: Int) =

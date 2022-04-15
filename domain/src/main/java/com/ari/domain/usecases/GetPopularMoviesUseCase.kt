@@ -11,9 +11,12 @@ import javax.inject.Inject
 class GetPopularMoviesUseCase @Inject constructor(
     private val moviesRepository: MoviesRepository
 ) {
+    suspend operator fun invoke(page: Int): ResultDomain<PopularMoviesResponseDomain> {
+        if (page < 1) {
+            return ResultDomain.Error("Page invalid")
+        }
 
-    suspend operator fun invoke(page: Int): ResultDomain<PopularMoviesResponseDomain> =
-        when (val response: Response<PopularMoviesResponseData> = moviesRepository.getPopularMovies(page)) {
+        return when (val response: Response<PopularMoviesResponseData> = moviesRepository.getPopularMovies(page)) {
             is Response.Success -> {
                 moviesRepository.deletePopularMoviesFromDB(page)
                 moviesRepository.insertPopularMoviesToDB(response.result)
@@ -21,8 +24,14 @@ class GetPopularMoviesUseCase @Inject constructor(
             }
             is Response.Error -> {
                 //ResultDomain.Error(response.error)
-                ResultDomain.Success(moviesRepository.getPopularMoviesFromDB(page).toDomain())
+                val data: PopularMoviesResponseDomain? = moviesRepository.getPopularMoviesFromDB(page)?.toDomain()
+                if (data != null) {
+                    ResultDomain.Success(data)
+                } else {
+                    ResultDomain.Error("No data from local database")
+                }
             }
         }
+    }
 
 }

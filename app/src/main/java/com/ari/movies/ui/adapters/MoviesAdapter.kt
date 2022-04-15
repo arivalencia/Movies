@@ -20,6 +20,17 @@ class MoviesAdapter(
         notifyDataSetChanged()
     }
 
+    fun addItems(movies: List<MovieUi>) {
+        val positionStart = this.movies.size
+        this.movies.addAll(movies)
+        notifyItemRangeInserted(positionStart, movies.size)
+    }
+
+    fun clearList() {
+        this.movies.clear()
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
         ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )

@@ -3,11 +3,12 @@ package com.ari.movies.ui.fragments
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ari.movies.R
 import com.ari.movies.databinding.FragmentMoviesBinding
 import com.ari.movies.ui.adapters.MoviesAdapter
@@ -38,6 +39,7 @@ class MoviesFragment : Fragment() {
         init()
         setHasOptionsMenu(true)
         observeResults()
+        moviesViewModel.onCreate()
 
     }
 
@@ -48,9 +50,10 @@ class MoviesFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) { // On click option from actionBar menu
-            R.id.most_popular -> moviesViewModel.getPopularMovies()
-            R.id.playing_now -> moviesViewModel.getPlayingNowMovies()
+            R.id.most_popular -> moviesViewModel.changeToMostPopularMovies()
+            R.id.playing_now -> moviesViewModel.changeToPlayingNowMovies()
         }
+        moviesAdapter.clearList()
         return super.onOptionsItemSelected(item)
     }
 
@@ -64,6 +67,26 @@ class MoviesFragment : Fragment() {
                 .navigate(R.id.action_moviesFragment_to_movieDetailFragment, bundle)
         }
         binding.rvMovies.adapter = moviesAdapter
+        val layoutManager = binding.rvMovies.layoutManager!!
+        binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val visibleItemCount: Int = layoutManager.childCount
+                val totalItemCount: Int = layoutManager.itemCount
+                val firstVisibleItemPosition: Int =
+                    (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+
+                // Load more if we have reach the end to the recyclerView
+                if (!moviesViewModel.isLoading.value!!) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                        && firstVisibleItemPosition >= 0
+                        // && totalItemCount >= PAGE_SIZE
+                        ) {
+                        moviesViewModel.loadNextPage()
+                    }
+                }
+            }
+        })
     }
 
     private fun observeResults() {
@@ -72,12 +95,15 @@ class MoviesFragment : Fragment() {
         }
 
         moviesViewModel.movies.observe(viewLifecycleOwner) { movies ->
-            moviesAdapter.setList(movies)
+            if (moviesAdapter.itemCount == 0) {
+                moviesAdapter.setList(movies)
+            } else {
+                moviesAdapter.addItems(movies.subList(moviesAdapter.itemCount, movies.size))
+            }
         }
 
         moviesViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressIndicator.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
-            binding.rvMovies.visibility = if (isLoading) View.GONE else View.VISIBLE
         }
     }
 

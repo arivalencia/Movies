@@ -14,8 +14,8 @@ class MoviesLocalDataSourceImpl @Inject constructor(
     private val playingNowMoviesPageDao: PlayingNowMoviesPageDao
 ): MoviesLocalDataSource {
 
-    override suspend fun getPopularMoviesFromDB(page: Int): PopularMoviesResponseData =
-        popularMoviesPageDao.getPopularMoviesPage(page).toData()
+    override suspend fun getPopularMoviesFromDB(page: Int): PopularMoviesResponseData? =
+        popularMoviesPageDao.getPopularMoviesPage(page)?.toData()
 
     override suspend fun deletePopularMoviesFromDB(page: Int) =
         popularMoviesPageDao.deletePopularMoviePage(page)
@@ -23,8 +23,8 @@ class MoviesLocalDataSourceImpl @Inject constructor(
     override suspend fun insertPopularMoviesToDB(data: PopularMoviesResponseData) =
         popularMoviesPageDao.insertPopularMoviesPage(data.toEntity())
 
-    override suspend fun getPlayingNowMoviesFromDB(page: Int): PlayingNowResponseData =
-        playingNowMoviesPageDao.getPlayingNowMoviesPage(page).toData()
+    override suspend fun getPlayingNowMoviesFromDB(page: Int): PlayingNowResponseData? =
+        playingNowMoviesPageDao.getPlayingNowMoviesPage(page)?.toData()
 
     override suspend fun deletePlayingNowMoviesFromDB(page: Int) =
         playingNowMoviesPageDao.deletePlayingNowMoviesPage(page)
