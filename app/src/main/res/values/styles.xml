@@ -37,7 +37,6 @@
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:textSize">14sp</item>
-<!--        <item name="android:textColor">@color/black</item>-->
     </style>
 
     <style name="MovieDataResult">
@@ -50,6 +49,43 @@
 
     <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/primary</item>
+    </style>
+
+    <style name="ErrorTitleDialog">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/letter_main</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginBottom">24dp</item>
+    </style>
+
+    <style name="ErrorDescriptionDialog">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/letter_secondary</item>
+        <item name="android:layout_marginTop">24dp</item>
+        <item name="android:layout_marginStart">32dp</item>
+        <item name="android:layout_marginEnd">32dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="PrimaryButton">
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/bg_primary_button</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">32dp</item>
+        <item name="android:layout_marginBottom">24dp</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/shape_rounded_dialog</item>
     </style>
 
 </resources>

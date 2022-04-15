@@ -46,6 +46,8 @@ class MoviesViewModel @Inject constructor(
         _movies.postValue(emptyList())
     }
 
+    fun clearError() = _error.postValue("")
+
     fun changeToMostPopularMovies() {
         resetPageNumberAndMovies()
         getPopularMovies()

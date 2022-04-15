@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ari.movies.R
 import com.ari.movies.databinding.FragmentMoviesBinding
 import com.ari.movies.ui.adapters.MoviesAdapter
+import com.ari.movies.ui.dialogs.SomethingWentWrongBottomSheet
 import com.ari.movies.ui.viewmodels.MoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +23,8 @@ class MoviesFragment : Fragment() {
     private val binding: FragmentMoviesBinding get() = _binding!!
     private lateinit var moviesAdapter: MoviesAdapter
     private val moviesViewModel: MoviesViewModel by viewModels()
+
+    private lateinit var errorDialog: SomethingWentWrongBottomSheet
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,21 +46,11 @@ class MoviesFragment : Fragment() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_movies_filter, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) { // On click option from actionBar menu
-            R.id.most_popular -> moviesViewModel.changeToMostPopularMovies()
-            R.id.playing_now -> moviesViewModel.changeToPlayingNowMovies()
+    private fun init() {// Init variables
+        errorDialog = SomethingWentWrongBottomSheet() { // On dismiss dialog error
+            moviesViewModel.clearError()
         }
-        moviesAdapter.clearList()
-        return super.onOptionsItemSelected(item)
-    }
 
-    private fun init() {
         moviesAdapter = MoviesAdapter() { movie, _ ->
             // Bundle for send to MovieDetailFragment and show
             val bundle = bundleOf(MovieDetailFragment.EXTRA_MOVIE to movie)
@@ -80,8 +73,8 @@ class MoviesFragment : Fragment() {
                 if (!moviesViewModel.isLoading.value!!) {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                         && firstVisibleItemPosition >= 0
-                        // && totalItemCount >= PAGE_SIZE
-                        ) {
+                    // && totalItemCount >= PAGE_SIZE
+                    ) {
                         moviesViewModel.loadNextPage()
                     }
                 }
@@ -89,9 +82,23 @@ class MoviesFragment : Fragment() {
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_movies_filter, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) { // On click option from actionBar menu
+            R.id.most_popular -> moviesViewModel.changeToMostPopularMovies()
+            R.id.playing_now -> moviesViewModel.changeToPlayingNowMovies()
+        }
+        moviesAdapter.clearList()
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun observeResults() {
         moviesViewModel.error.observe(viewLifecycleOwner) { error ->
-            showToast(error)
+            showError(error)
         }
 
         moviesViewModel.movies.observe(viewLifecycleOwner) { movies ->
@@ -107,8 +114,11 @@ class MoviesFragment : Fragment() {
         }
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    private fun showError(message: String) {
+        if (!errorDialog.isVisible && message.isNotEmpty()) {
+            errorDialog.show(childFragmentManager, errorDialog.tag)
+            moviesViewModel.clearError()
+        }
     }
 
     override fun onDestroy() {

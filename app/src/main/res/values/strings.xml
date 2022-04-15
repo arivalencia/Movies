@@ -12,4 +12,7 @@
     <string name="release_date">Release date</string>
     <string name="original_title">Original title</string>
     <string name="detail">Detail</string>
+    <string name="oops">Oops!</string>
+    <string name="something_went_wrong">Sorry… something went wrong. Please try again later.</string>
+    <string name="accept">Accept</string>
 </resources>
