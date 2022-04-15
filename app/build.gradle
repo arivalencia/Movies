@@ -92,6 +92,9 @@ dependencies {
     // Coroutines for testing
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0"
 
+    // View video
+    implementation 'com.google.android.exoplayer:exoplayer:2.7.3'
+
 }
 
 hilt {

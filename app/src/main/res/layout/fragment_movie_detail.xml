@@ -17,11 +17,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/playerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:hide_on_touch="true"
+                app:show_timeout="3000"
+                app:rewind_increment="10000"
+                app:fastforward_increment="10000"
+                app:use_controller="true"
+                android:background="@android:color/background_dark"
+                app:player_layout_id="@layout/exo_simple_player_view"
+                app:controller_layout_id="@layout/custom_controller"
+                app:resize_mode="fixed_width"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/playerView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
